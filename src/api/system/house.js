@@ -42,3 +42,10 @@ export function delHouse(id) {
     method: 'delete'
   })
 }
+
+export function getCheckIdNameAndDate() {
+  return request({
+    url: '/system/house/getCheck' ,
+    method: 'get'
+  })
+}

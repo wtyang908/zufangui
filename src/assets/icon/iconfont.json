@@ -1,0 +1,86 @@
+{
+  "id": "4001232",
+  "name": "elementui",
+  "font_family": "iconfont",
+  "css_prefix_text": "el_icon_zz",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "993781",
+      "name": "清空",
+      "font_class": "qingkong",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "658047",
+      "name": "无线网络",
+      "font_class": "wuxianwangluo",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "4616080",
+      "name": "装修商家-衣橱",
+      "font_class": "zhuangxiushangjia-",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "4762912",
+      "name": "冰箱",
+      "font_class": "bingxiang",
+      "unicode": "e90b",
+      "unicode_decimal": 59659
+    },
+    {
+      "icon_id": "4762918",
+      "name": "洗衣机",
+      "font_class": "xiyiji",
+      "unicode": "e90d",
+      "unicode_decimal": 59661
+    },
+    {
+      "icon_id": "4762919",
+      "name": "空调",
+      "font_class": "kongtiao",
+      "unicode": "e90e",
+      "unicode_decimal": 59662
+    },
+    {
+      "icon_id": "5650075",
+      "name": "热水器",
+      "font_class": "yinshuiji-",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "8124831",
+      "name": "厨房家具",
+      "font_class": "chufangjiaju",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "33997763",
+      "name": "电视机",
+      "font_class": "dianshiji",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "33997779",
+      "name": "沙发",
+      "font_class": "shafa",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "1051",
+      "name": "床",
+      "font_class": "chuang",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

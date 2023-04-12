@@ -14,7 +14,8 @@ import directive from './directive' // directive
 import plugins from './plugins' // plugins
 import { download } from '@/utils/request'
 
-import './assets/icons' // icon
+import './assets/icons' // icons
+import  './assets/icon/iconfont.css'//icon
 import './permission' // permission control
 import { getDicts } from "@/api/system/dict/data";
 import { getConfigKey } from "@/api/system/config";

@@ -1,5 +1,8 @@
 <template>
   <div class="app-container">
+
+<!--    <el-button @click="getCheckIdNameAndDate1"><h1>{{this.house.checkOpion}}</h1></el-button>-->
+
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="房屋省级地址" prop="houseProvinceAddress">
         <el-input
@@ -118,7 +121,7 @@
           plain
           icon="el-icon-plus"
           size="mini"
-          @click="handleAdd"
+          @click="handleAdd "
           v-hasPermi="['system:house:add']"
         >新增</el-button>
       </el-col>
@@ -159,7 +162,7 @@
 
     <el-table v-loading="loading" :data="houseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="房屋id" align="center" prop="id" />
+<!--      <el-table-column label="房屋id" align="center" prop="id" />-->
       <el-table-column label="房屋省级地址" align="center" prop="houseProvinceAddress" />
       <el-table-column label="房屋市级地址" align="center" prop="houseCityAddress" />
       <el-table-column label="房屋具体地址" align="center" prop="houseAddress" />
@@ -170,18 +173,18 @@
           <image-preview :src="scope.row.houseImage" :width="50" :height="50"/>
         </template>
       </el-table-column>
-      <el-table-column label="房东ID" align="center" prop="houseOwnerId" />
+<!--      <el-table-column label="房东ID" align="center" prop="houseOwnerId" />-->
       <el-table-column label="房东姓名" align="center" prop="houseOwnerName" />
       <el-table-column label="房屋价格" align="center" prop="housePrice" />
       <el-table-column label="是否出租" align="center" prop="checkRent" />
-      <el-table-column label="房屋审核" align="center" prop="checkOpion" />
-      <el-table-column label="审核者ID" align="center" prop="checkerId" />
-      <el-table-column label="审核者姓名" align="center" prop="checkerName" />
-      <el-table-column label="审核时间" align="center" prop="checkDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.checkDate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="房屋审核状态" align="center" prop="checkOpion" />
+<!--      <el-table-column label="审核者ID" align="center" prop="checkerId" />-->
+<!--      <el-table-column label="审核者姓名" align="center" prop="checkerName" />-->
+<!--      <el-table-column label="审核时间" align="center" prop="checkDate" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.checkDate, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -218,7 +221,7 @@
     />
 
     <!-- 添加或修改房屋管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body >
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="房屋省级地址" prop="houseProvinceAddress">
           <el-input v-model="form.houseProvinceAddress" placeholder="请输入房屋省级地址" />
@@ -250,19 +253,20 @@
         <el-form-item label="是否出租" prop="checkRent">
           <el-input v-model="form.checkRent" placeholder="请输入是否出租" />
         </el-form-item>
-        <el-form-item label="房屋审核" prop="checkOpion">
-          <el-input v-model="form.checkOpion" placeholder="请输入房屋审核" />
+        <el-form-item label="房屋审核" prop="checkOpion"  >
+          <el-input v-model="form.checkOpion" placeholder="请输入房屋审核" disabled="true" />
         </el-form-item>
-        <el-form-item label="审核者ID" prop="checkerId">
-          <el-input v-model="form.checkerId" placeholder="请输入审核者ID" />
+        <el-form-item label="审核者ID" prop="checkerId"  >
+          <el-input v-model="form.checkerId" placeholder="请输入审核者ID" disabled="true"/>
         </el-form-item>
-        <el-form-item label="审核者姓名" prop="checkerName">
-          <el-input v-model="form.checkerName" placeholder="请输入审核者姓名" />
-        </el-form-item>
-        <el-form-item label="审核时间" prop="checkDate">
+        <el-form-item label="审核者姓名" prop="checkerName"   >
+          <el-input v-model="form.checkerName" placeholder="请输入审核者姓名" disabled="true"/>
+        </el-form-item >
+        <el-form-item label="审核时间" prop="checkDate"  >
           <el-date-picker clearable
             v-model="form.checkDate"
             type="date"
+            disabled="true"
             value-format="yyyy-MM-dd"
             placeholder="请选择审核时间">
           </el-date-picker>
@@ -277,7 +281,8 @@
 </template>
 
 <script>
-import { listHouse, getHouse, delHouse, addHouse, updateHouse } from "@/api/system/house";
+import { listHouse, getHouse, delHouse, addHouse, updateHouse ,getCheckIdNameAndDate } from "@/api/system/house";
+
 
 export default {
   name: "House",
@@ -297,6 +302,9 @@ export default {
       total: 0,
       // 房屋管理表格数据
       houseList: [],
+
+      house : {},
+
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -329,8 +337,23 @@ export default {
   },
   created() {
     this.getList();
+    this.getCheckIdNameAndDate1();
   },
   methods: {
+    /** 获取审核员id，姓名和时间 */
+    getCheckIdNameAndDate1(){
+      getCheckIdNameAndDate().then((res) => {
+        this.house = res.data;
+      });
+    },
+
+
+
+
+
+
+
+
     /** 查询房屋管理列表 */
     getList() {
       this.loading = true;
@@ -358,8 +381,8 @@ export default {
         houseOwnerId: null,
         houseOwnerName: null,
         housePrice: null,
-        checkRent: null,
-        checkOpion: null,
+        checkRent:  '否',
+        checkOpion: '否',
         checkerId: null,
         checkerName: null,
         checkDate: null
@@ -394,6 +417,10 @@ export default {
       const id = row.id || this.ids
       getHouse(id).then(response => {
         this.form = response.data;
+        this.form.checkOpion= this.house.checkOpion;
+        this.form.checkerId=this.house.checkerId;
+        this.form.checkerName=this.house.checkerName;
+        this.form.checkDate=this.house.checkDate;
         this.open = true;
         this.title = "修改房屋管理";
       });
