@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-
-    <!--    <el-button @click="getCheckIdNameAndDate1"><h1>{{this.house.checkOpion}}</h1></el-button>-->
-
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="省级地址" prop="houseProvinceAddress">
         <el-input
@@ -34,113 +31,113 @@
       </el-form-item>
     </el-form>
 
-      <div class="house-carousel">
-        <h1 class="title1">热门导购</h1>
-        <el-carousel indicator-position="outside">
-          <el-carousel-item v-for="(house, index) in processedHouseList1" :key="index">
-            <div class="house-item1">
-              <img class="house-img1" :src="'/dev-api' + house.houseImage" alt="">
-              <div class="house-info1">
-                <h3 class="house-title1">地址：{{ house.houseProvinceAddress }}{{ house.houseCityAddress }}{{ house.houseAddress }}</h3>
-                <div class="house-desc1">具体描述：{{ house.houseDesc }}</div>
-                <div class="house-owner1">房东：{{ house.houseOwnerName }}</div>
-                <div class="house-price1">价格：{{ house.housePrice }}元/天</div>
-                <el-button class="house-btn1" type="primary"  @click="handledetail(house.id)"  v-hasPermi="['system:house:query']">查看详情</el-button>
-              </div>
+    <div class="house-carousel">
+      <h1 class="title1">热门导购</h1>
+      <el-carousel indicator-position="outside">
+        <el-carousel-item v-for="(house, index) in processedHouseList1" :key="index">
+          <div class="house-item1">
+            <img class="house-img1" :src="'/dev-api' + house.houseImage" alt="">
+            <div class="house-info1">
+              <h3 class="house-title1">地址：{{ house.houseProvinceAddress }}{{ house.houseCityAddress }}{{ house.houseAddress }}</h3>
+              <div class="house-desc1">具体描述：{{ house.houseDesc }}</div>
+              <div class="house-owner1">房东：{{ house.houseOwnerName }}</div>
+              <div class="house-price1">价格：{{ house.housePrice }}元/天</div>
+              <el-button class="house-btn1" type="primary"  @click="handledetail(house.id)"  v-hasPermi="['system:house:query']">查看详情</el-button>
             </div>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
 
 
 
 
-      <!--      <el-form-item label="房屋名称" prop="houseName">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.houseName"-->
-      <!--          placeholder="请输入房屋名称"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="房屋描述" prop="houseDesc">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.houseDesc"-->
-      <!--          placeholder="请输入房屋描述"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="房东ID" prop="houseOwnerId">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.houseOwnerId"-->
-      <!--          placeholder="请输入房东ID"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="房东姓名" prop="houseOwnerName">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.houseOwnerName"-->
-      <!--          placeholder="请输入房东姓名"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="房屋价格" prop="housePrice">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.housePrice"-->
-      <!--          placeholder="请输入房屋价格"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="是否出租" prop="checkRent">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.checkRent"-->
-      <!--          placeholder="请输入是否出租"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="房屋审核" prop="checkOpion">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.checkOpion"-->
-      <!--          placeholder="请输入房屋审核"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="审核者ID" prop="checkerId">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.checkerId"-->
-      <!--          placeholder="请输入审核者ID"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="审核者姓名" prop="checkerName">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.checkerName"-->
-      <!--          placeholder="请输入审核者姓名"-->
-      <!--          clearable-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="审核时间" prop="checkDate">-->
-      <!--        <el-date-picker clearable-->
-      <!--          v-model="queryParams.checkDate"-->
-      <!--          type="date"-->
-      <!--          value-format="yyyy-MM-dd"-->
-      <!--          placeholder="请选择审核时间">-->
-      <!--        </el-date-picker>-->
-      <!--      </el-form-item>-->
+    <!--      <el-form-item label="房屋名称" prop="houseName">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.houseName"-->
+    <!--          placeholder="请输入房屋名称"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="房屋描述" prop="houseDesc">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.houseDesc"-->
+    <!--          placeholder="请输入房屋描述"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="房东ID" prop="houseOwnerId">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.houseOwnerId"-->
+    <!--          placeholder="请输入房东ID"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="房东姓名" prop="houseOwnerName">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.houseOwnerName"-->
+    <!--          placeholder="请输入房东姓名"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="房屋价格" prop="housePrice">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.housePrice"-->
+    <!--          placeholder="请输入房屋价格"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="是否出租" prop="checkRent">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.checkRent"-->
+    <!--          placeholder="请输入是否出租"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="房屋审核" prop="checkOpion">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.checkOpion"-->
+    <!--          placeholder="请输入房屋审核"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="审核者ID" prop="checkerId">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.checkerId"-->
+    <!--          placeholder="请输入审核者ID"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="审核者姓名" prop="checkerName">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.checkerName"-->
+    <!--          placeholder="请输入审核者姓名"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="审核时间" prop="checkDate">-->
+    <!--        <el-date-picker clearable-->
+    <!--          v-model="queryParams.checkDate"-->
+    <!--          type="date"-->
+    <!--          value-format="yyyy-MM-dd"-->
+    <!--          placeholder="请选择审核时间">-->
+    <!--        </el-date-picker>-->
+    <!--      </el-form-item>-->
 
 
 
 
-<!--    <el-table v-loading="loading" :data="houseList" @selection-change="handleSelectionChange">-->
-<!--      <el-table-column type="selection" width="55" align="center" />-->
+    <!--    <el-table v-loading="loading" :data="houseList" @selection-change="handleSelectionChange">-->
+    <!--      <el-table-column type="selection" width="55" align="center" />-->
     <h1 class="title1">所有房型展示</h1>
 
     <el-row :gutter="10" class="mb8">
@@ -186,7 +183,7 @@
           v-hasPermi="['system:house:export']"
         >导出</el-button>
       </el-col>
-<!--      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>-->
+      <!--      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>-->
     </el-row>
     <div class="house-list">
       <el-row :gutter="20" v-for="(house, index) in processedHouseList" :key="index" @selection-change="handleSelectionChange">
@@ -210,55 +207,55 @@
 
 
     </div>
-      <!--      <el-table-column label="房屋id" align="center" prop="id" />-->
-<!--      <el-table-column label="房屋省级地址" align="center" prop="houseProvinceAddress" />-->
-<!--      <el-table-column label="房屋市级地址" align="center" prop="houseCityAddress" />-->
-<!--      <el-table-column label="房屋具体地址" align="center" prop="houseAddress" />-->
-<!--      <el-table-column label="房屋名称" align="center" prop="houseName" />-->
-<!--      <el-table-column label="房屋描述" align="center" prop="houseDesc" />-->
-<!--      <el-table-column label="房屋照片" align="center" prop="houseImage" width="100">-->
-<!--        <template slot-scope="scope">-->
-<!--          <image-preview :src="scope.row.houseImage" :width="50" :height="50"/>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-      <!--      <el-table-column label="房东ID" align="center" prop="houseOwnerId" />-->
-<!--      <el-table-column label="房东姓名" align="center" prop="houseOwnerName" />-->
-<!--      <el-table-column label="房屋价格" align="center" prop="housePrice" />-->
-<!--      <el-table-column label="是否出租" align="center" prop="checkRent" />-->
-<!--      <el-table-column label="房屋审核状态" align="center" prop="checkOpion" />-->
-      <!--      <el-table-column label="审核者ID" align="center" prop="checkerId" />-->
-      <!--      <el-table-column label="审核者姓名" align="center" prop="checkerName" />-->
-      <!--      <el-table-column label="审核时间" align="center" prop="checkDate" width="180">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <span>{{ parseTime(scope.row.checkDate, '{y}-{m}-{d}') }}</span>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
-<!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->
-<!--        <template slot-scope="scope">-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-edit"-->
-<!--            @click="handleUpdate(scope.row)"-->
-<!--            v-hasPermi="['system:house:edit']"-->
-<!--          >修改</el-button>-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-delete"-->
-<!--            @click="handleDelete(scope.row)"-->
-<!--            v-hasPermi="['system:house:remove']"-->
-<!--          >删除</el-button>-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-detail"-->
-<!--            @click="handledetail(scope.row)"-->
-<!--            v-hasPermi="['system:house:query']"-->
-<!--          >查看详情</el-button>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--    </el-table>-->
+    <!--      <el-table-column label="房屋id" align="center" prop="id" />-->
+    <!--      <el-table-column label="房屋省级地址" align="center" prop="houseProvinceAddress" />-->
+    <!--      <el-table-column label="房屋市级地址" align="center" prop="houseCityAddress" />-->
+    <!--      <el-table-column label="房屋具体地址" align="center" prop="houseAddress" />-->
+    <!--      <el-table-column label="房屋名称" align="center" prop="houseName" />-->
+    <!--      <el-table-column label="房屋描述" align="center" prop="houseDesc" />-->
+    <!--      <el-table-column label="房屋照片" align="center" prop="houseImage" width="100">-->
+    <!--        <template slot-scope="scope">-->
+    <!--          <image-preview :src="scope.row.houseImage" :width="50" :height="50"/>-->
+    <!--        </template>-->
+    <!--      </el-table-column>-->
+    <!--      <el-table-column label="房东ID" align="center" prop="houseOwnerId" />-->
+    <!--      <el-table-column label="房东姓名" align="center" prop="houseOwnerName" />-->
+    <!--      <el-table-column label="房屋价格" align="center" prop="housePrice" />-->
+    <!--      <el-table-column label="是否出租" align="center" prop="checkRent" />-->
+    <!--      <el-table-column label="房屋审核状态" align="center" prop="checkOpion" />-->
+    <!--      <el-table-column label="审核者ID" align="center" prop="checkerId" />-->
+    <!--      <el-table-column label="审核者姓名" align="center" prop="checkerName" />-->
+    <!--      <el-table-column label="审核时间" align="center" prop="checkDate" width="180">-->
+    <!--        <template slot-scope="scope">-->
+    <!--          <span>{{ parseTime(scope.row.checkDate, '{y}-{m}-{d}') }}</span>-->
+    <!--        </template>-->
+    <!--      </el-table-column>-->
+    <!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->
+    <!--        <template slot-scope="scope">-->
+    <!--          <el-button-->
+    <!--            size="mini"-->
+    <!--            type="text"-->
+    <!--            icon="el-icon-edit"-->
+    <!--            @click="handleUpdate(scope.row)"-->
+    <!--            v-hasPermi="['system:house:edit']"-->
+    <!--          >修改</el-button>-->
+    <!--          <el-button-->
+    <!--            size="mini"-->
+    <!--            type="text"-->
+    <!--            icon="el-icon-delete"-->
+    <!--            @click="handleDelete(scope.row)"-->
+    <!--            v-hasPermi="['system:house:remove']"-->
+    <!--          >删除</el-button>-->
+    <!--          <el-button-->
+    <!--            size="mini"-->
+    <!--            type="text"-->
+    <!--            icon="el-icon-detail"-->
+    <!--            @click="handledetail(scope.row)"-->
+    <!--            v-hasPermi="['system:house:query']"-->
+    <!--          >查看详情</el-button>-->
+    <!--        </template>-->
+    <!--      </el-table-column>-->
+    <!--    </el-table>-->
 
     <pagination
       v-show="total>0"
@@ -330,8 +327,6 @@
 
 <script>
 import { listHouse, getHouse, delHouse, addHouse, updateHouse ,getCheckIdNameAndDate } from "@/api/system/house";
-
-
 export default {
   name: "House",
   data() {
@@ -352,10 +347,7 @@ export default {
       houseList: [],
       //热门房屋列表
       hostHouseList: [],
-
       house : {},
-
-
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -390,10 +382,8 @@ export default {
     this.getList();
     this.getCheckIdNameAndDate1();
     this.getHouseDetail();
-
   },
   mounted() {
-
   },
   computed: {
     processedHouseList() {
@@ -412,44 +402,28 @@ export default {
     },
   },
   methods: {
-
-     // ,computed实现了
-     // trimHouseImagePrefix(houseList) {
-     //    for (let i = 0; i < houseList.length; i++) {
-     //         const house = houseList[i];
-     //          const images = house.houseImage.split(',');
-     //          house.houseImage=images[0];
-     //          alert(house.houseImage);
-     //    }
-     //  },
-
-
-getHouseDetail() {
+    // ,computed实现了
+    // trimHouseImagePrefix(houseList) {
+    //    for (let i = 0; i < houseList.length; i++) {
+    //         const house = houseList[i];
+    //          const images = house.houseImage.split(',');
+    //          house.houseImage=images[0];
+    //          alert(house.houseImage);
+    //    }
+    //  },
+    getHouseDetail() {
       const id = 551
       getHouse(id).then((res) => {
         this.house=res.data;
         this.hostHouseList.push(this.house);
       });
-
     },
-
-
-
-
     /** 获取审核员id，姓名和时间 */
     getCheckIdNameAndDate1(){
       getCheckIdNameAndDate().then((res) => {
         this.house = res.data;
       });
     },
-
-
-
-
-
-
-
-
     /** 查询房屋管理列表 */
     getList() {
       this.loading = true;
@@ -578,7 +552,6 @@ getHouseDetail() {
       const ids = id;
       this.$router.push({path:'/housedetail',query:{id:ids}})
     }
-
   }
 };
 </script>
@@ -587,13 +560,11 @@ getHouseDetail() {
 .house-list {
   margin-top: 20px;
 }
-
 .house-img {
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
-
 .house-info {
   display: flex;
   justify-content: space-between;
@@ -601,36 +572,29 @@ getHouseDetail() {
   background-color: #f8f8f8;
   border-radius: 5px;
 }
-
 .house-content {
   flex: 1;
 }
-
 .house-title {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-
 .house-desc {
   margin-bottom: 10px;
 }
-
 .house-owner,
 .house-price {
   margin-bottom: 5px;
 }
-
 .house-action {
   margin-left: 20px;
   align-self: center;
 }
-
 .house-carousel {
   width: 100%;
   height: 500px;
 }
-
 .house-item1 {
   display: flex;
   flex-direction: row;
@@ -638,45 +602,37 @@ getHouseDetail() {
   align-items: center;
   height: 100%;
 }
-
 .house-img1 {
   width: 400px;
   height: 400px;
   object-fit: cover;
   margin-right: 20px;
 }
-
 .house-info1 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-
 .house-title1 {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-
 .house-desc1 {
   font-size: 16px;
   margin-bottom: 10px;
 }
-
 .house-owner1,
 .house-price1 {
   font-size: 14px;
   margin-bottom: 5px;
 }
-
 .house-btn1 {
   margin-top: 10px;
 }
-
 .title 1{
   font-size: 24px;
   font-weight: bold;
   text-align: left;
 }
-
 </style>

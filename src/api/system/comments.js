@@ -9,6 +9,14 @@ export function listComments(query) {
   })
 }
 
+// 通过房屋id查询房屋评论列表，值包含多个
+export function listCommentsByHouseId(houseId) {
+  return request({
+    url: '/system/comments/getByHouseId/'+houseId,
+    method: 'get',
+  })
+}
+
 // 查询房屋评论详细
 export function getComments(id) {
   return request({
