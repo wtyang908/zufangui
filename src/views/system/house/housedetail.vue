@@ -269,27 +269,33 @@
         </el-carousel>
       </div>
 
-
+      <!-- 地图展示 -->
+      <span style="text-align: left; font-size: 20px; font-weight: bold;">房屋具体地址:{{ this.house.data.houseProvinceAddress }}{{ this.house.data.houseCityAddress }}{{ this.house.data.houseAddress }}</span>
+      <template>
+        <baidu-map class="map" :center=this.mapAddress :zoom="15" >
+        </baidu-map>
+      </template>
 
       <!-- 房屋评论 -->
 
-      <el-row :gutter="10" class="mb8">
-        <el-col :span="1.5">
-          <el-button
-            type="primary"
-            plain
-            icon="el-icon-plus"
-            size="mini"
-            @click="handleAdd3"
-            v-hasPermi="['system:comments:add']"
-          >新增评论</el-button>
-        </el-col>
-        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList35"></right-toolbar>
-      </el-row>
+
 
       <el-row>
         <div style="margin: 5px auto; width: 100%">
           <span style="text-align: left; font-size: 20px; font-weight: bold;">评论列表</span>
+          <el-row :gutter="10" class="mb8">
+            <el-col :span="1.5">
+              <el-button
+                type="primary"
+                plain
+                icon="el-icon-plus"
+                size="mini"
+                @click="handleAdd3"
+                v-hasPermi="['system:comments:add']"
+              >新增评论</el-button>
+            </el-col>
+            <right-toolbar :showSearch.sync="showSearch" @queryTable="getList35"></right-toolbar>
+          </el-row>
           <div v-if="commentsListByHouseId.length == 0" style="text-align: left; font-size: 16px; font-weight: bold; margin-left: 20px; margin-top: 20px;">暂无评论，期待您的评论~</div>
           <div v-else v-for="item in commentsListByHouseId" :key="item.id">
             <div style="display: flex; margin-top: 20px;">
@@ -359,6 +365,22 @@
         :limit.sync="queryParams3.pageSize"
         @pagination="getList3"
       />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- 添加或修改房屋评论对话框 -->
       <el-dialog :title="title" :visible.sync="open3" width="500px" append-to-body>
@@ -524,7 +546,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="价格" prop="price" >
-          <el-input v-model="form.price" placeholder="请输入价格" disabled="true" />
+          <el-input v-model="this.price1" placeholder="请输入价格" disabled="true" />
         </el-form-item>
       </el-form>
 
@@ -562,6 +584,8 @@ export default {
   dicts: ['facility_posses'],
   data() {
     return {
+
+
       open2: false,
       open3: false,
       // 表单参数
@@ -704,7 +728,10 @@ export default {
         const house = this.house.data;
         const imageArr = house.houseImage.split(',');
         return  imageArr;
-
+    },
+    //地图地址
+    mapAddress(){
+      return this.house.data.houseProvinceAddress + this.house.data.houseCityAddress + this.house.data.houseAddress
     },
 
   },
@@ -853,6 +880,7 @@ export default {
         this.form.roomId=this.$route.query.id;
         this.form.tenantId=this.$store.state.user.userId;
         this.form.tenantName=this.$store.state.user.name;
+        this.form.price=this.price1;
         addOrder(this.form).then(response => {
           this.$modal.msgSuccess("新增成功");
           this.open = false;
@@ -1030,64 +1058,16 @@ export default {
   font-size: 1.2rem;
   font-weight: normal;
 }
+.map {
+  width: 2000px;
+  height: 500px;
+}
 
-
-.bgCol {
-  width: 1050px;
-  height: 450px;
-  margin: 0 auto;
-}
-.coverImg-container {
-  border-radius: 4px;
-  width: 1050px;
-  height: 450px;
-  margin-top: 40px;
-  text-align: center;
-}
-.bg-purple {
-  background: #FFFFFF;
-  border-radius: 5px;
-}
-.bg-trans {
-  background: rgba(255,255,255,0.6);
-//background-color: #cccccc;
-//opacity: 60%;
-}
-.row-bg {
-  padding: 10px 0;
-  background-color: #FFFFFF;
-}
-.row-title {
-  margin-top: -85px;
-}
-.headRight {
-  margin-left: 330px;
-  margin-top: 40px;
-}
-.user-avatar {
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-}
 .commentAvatar {
   cursor: pointer;
   width: 50px;
   height: 50px;
   border-radius: 20px;
 }
-.el-icon-star-off {
-  transform: scale(1.2);
-}
-.el-icon-star-on {
-  color: #ff9900;
-  transform: scale(1.2);
-}
-.el-rate {
-  transform: scale(1.1);
-}
-.el-divider {
-  margin: 5px 0;
-  background-color: #cccccc;
-}
+
 </style>

@@ -38,6 +38,9 @@ import DictTag from '@/components/DictTag'
 import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
+//百度地图
+// import Vue from 'vue'
+import BaiduMap from 'vue-baidu-map'
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -63,6 +66,11 @@ Vue.use(directive)
 Vue.use(plugins)
 Vue.use(VueMeta)
 DictData.install()
+
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: 'LFE1jOCfC7qbctzNd4WhIG3hldKMIwZD'
+})
 
 /**
  * If you don't want to use mock-server
