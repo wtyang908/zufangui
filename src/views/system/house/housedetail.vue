@@ -59,13 +59,14 @@
             <el-row :gutter="10" class="mb8" style="text-align:center">
               <el-col :span="1.5">
                 <el-button
-                  type="primary"
-                  plain
-                  icon="el-icon-plus"
-                  size="medium"
+                  type="primary" size="medium"
                   @click="handleAdd"
-                  style="font-size: 24px"
                 >租房</el-button>
+                <el-button
+                  type="primary" size="medium"
+                  @click="submitCollect()"
+                  v-hasPermi="['system:collect:add']"
+                >收藏</el-button>
               </el-col>
             </el-row>
 
@@ -324,7 +325,7 @@
 
                 <!-- 多级回复,回复只能回复最开始的那条评论，即item.userId,因为我不知道咋做 -->
                 <div style="text-align: right;">
-                  <el-button type="text" @click=" showReplyBox(item.id)">查看回复</el-button>
+                  <el-button type="primary" size="small" @click=" showReplyBox(item.id)">点击回复</el-button>
                 </div>
                 <div v-for="reply in item.replyCommentList" :key="reply.id">
                   <div style="display: flex;">
@@ -368,20 +369,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <!-- 添加或修改房屋评论对话框 -->
       <el-dialog :title="title" :visible.sync="open3" width="500px" append-to-body>
         <el-form ref="form" :model="form3" :rules="rules" label-width="80px">
@@ -400,11 +387,6 @@
           <el-button @click="cancel3">取 消</el-button>
         </div>
       </el-dialog>
-
-
-
-
-
 
 
 
@@ -578,6 +560,7 @@ import {
   listCommentsByHouseId
 } from "@/api/system/comments";
 import {addReply, selectHouseReplyByCommentId} from "@/api/system/reply";
+import {addCollect, listCollect} from "@/api/system/collect";
 export default {
 
   name: "Order",
@@ -740,6 +723,31 @@ export default {
 
     /** 查询房屋设备列表 */
 
+    //收藏房屋
+    submitCollect(){
+      const data={
+        userId: this.$store.state.user.userId,
+        houseId:this.$route.query.id ,
+        createDate: new Date(),
+      }
+      const queryParamsByUserIdAndHouseId={
+        id: null,
+        userId: this.$store.state.user.userId,
+        houseId: this.$route.query.id,
+        createdDate: null
+      }
+      listCollect(queryParamsByUserIdAndHouseId).then(res=>{
+        const resLength=res.rows.length;
+        if(resLength==0){
+          addCollect(data).then((res)=>{
+          alert("收藏成功");
+        })
+        }else {
+          alert("您已经收藏过该房屋");
+        }
+      })
+    },
+
     // 取消按钮
     cancel2() {
       this.open2 = false;
@@ -891,11 +899,13 @@ export default {
       });
     },
     getList3(){
-      listCommentsByHouseId('551').then((res) => {
+      listCommentsByHouseId(this.$route.query.id).then((res) => {
         this.commentsListByHouseId=res.data;
         this.commentsListByHouseId.forEach(comments=>{
           selectHouseReplyByCommentId(comments.id).then(res=>{
-            comments.replyCommentList=res.data;
+            const replyCommentList=res.data;
+            this.$set(comments,'replyCommentList',replyCommentList);
+            // comments.replyCommentList=res.data;
             console.log(comments.replyCommentList);
           })
         });
